@@ -38,12 +38,16 @@ with pretrained:
     cols = st.columns(len(model.feature_names_in_))
     parameters = pd.DataFrame()
     for i, col in enumerate(cols):
+        if model.feature_names_in_[i] == "PROPERTY TYPE":
+            parameters[model.feature_names_in_[i]] = [
+                col.selectbox(model.feature_names_in_[i], options=np.unique(homes["PROPERTY TYPE"]))
+            ]
         parameters[model.feature_names_in_[i]] = [
             col.text_input(model.feature_names_in_[i])
         ]
     parameters.replace("", np.nan, inplace=True)
     parameters["SQUARE FEET"] = parameters["SQUARE FEET"].astype(float)
-    parameters["$/SQUARE FEET"] = parameters["$/SQUARE FEET"].astype(float)
+    
     st.write(parameters)
     if parameters.isna().sum().sum() == 0:
         st.write(f"Estimated Price: ",model.predict(parameters)[0])
