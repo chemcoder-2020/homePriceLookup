@@ -12,7 +12,7 @@ lookup, pretrained = st.tabs(["Lookup", "Pretrained Model"])
 
 with lookup:
     homes = pd.read_excel("EstimatedValue.xlsx")
-
+    print(homes.columns)
     homes["URL"] = homes[
         "URL (SEE https://www.redfin.com/buy-a-home/comparative-market-analysis FOR INFO ON PRICING)"
     ]
@@ -42,9 +42,10 @@ with pretrained:
             parameters[model.feature_names_in_[i]] = [
                 col.selectbox(model.feature_names_in_[i], options=np.unique(homes["PROPERTY TYPE"]))
             ]
-        parameters[model.feature_names_in_[i]] = [
-            col.text_input(model.feature_names_in_[i])
-        ]
+        else:
+            parameters[model.feature_names_in_[i]] = [
+                col.text_input(model.feature_names_in_[i])
+            ]
     parameters.replace("", np.nan, inplace=True)
     parameters["SQUARE FEET"] = parameters["SQUARE FEET"].astype(float)
     
