@@ -5,7 +5,7 @@ st.set_page_config(layout="wide")
 
 homes = pd.read_excel("EstimatedValue.xlsx")
 homes.rename({"URL (SEE https://www.redfin.com/buy-a-home/comparative-market-analysis FOR INFO ON PRICING)": "URL"})
-homes.drop(columns=["FAVORITE","INTERESTED","LATITUDE","LONGITUDE"])
+homes.drop(columns=["FAVORITE","INTERESTED","LATITUDE","LONGITUDE"], inplace=True)
 st.write(homes)
 address = st.selectbox(label="Home Address", options=homes["ADDRESS"])
 query = homes[homes["ADDRESS"] == address]
