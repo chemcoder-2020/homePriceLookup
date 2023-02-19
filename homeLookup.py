@@ -51,4 +51,4 @@ with pretrained:
     
     st.write(parameters)
     if parameters.isna().sum().sum() == 0:
-        st.write(f"Estimated Price: ",model.predict(parameters)[0])
+        st.write(f"Estimated Price: ",round(model.predict(parameters)[0],0))
