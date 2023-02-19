@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import pickle
 import numpy as np
-
+from st_aggrid import AgGrid
 
 
 st.set_page_config(layout="wide")
@@ -26,12 +26,18 @@ with lookup:
         ],
         inplace=True,
     )
-    st.write(homes)
+    
     address = st.selectbox(label="Home Address", options=homes["ADDRESS"])
     query = homes[homes["ADDRESS"] == address]
     query["PriceToValue"] = query["PriceToValue"].round(2)
-    for col in query.columns:
-        st.write(f"{col}: {query[col].values[0]}")
+    query = pd.Series(query.T[query.T.columns[0]])
+    query.name = query.ADDRESS
+    st.write(query)
+    # for col in query.columns:
+    #     st.write(f"{col}: {query[col].values[0]}")
+    # st.write(homes)
+    AgGrid(homes)
+    
 
 with pretrained:
     mname = st.selectbox("Model", options=["homePricing","homePricing_votingmodel"])
