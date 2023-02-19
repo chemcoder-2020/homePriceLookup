@@ -47,7 +47,7 @@ with pretrained:
                 col.text_input(model.feature_names_in_[i])
             ]
     parameters.replace("", np.nan, inplace=True)
-    parameters["SQUARE FEET"] = parameters["SQUARE FEET"].astype(float)
+    parameters.astype({"SQUARE FEET":float, "BEDS":float, "BATHS":float})
     
     st.write(parameters)
     if parameters.isna().sum().sum() == 0:
