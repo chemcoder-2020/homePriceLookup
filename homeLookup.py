@@ -40,7 +40,7 @@ with lookup:
     
 
 with pretrained:
-    mname = st.selectbox("Model", options=["homePricing","homePricing_votingmodel"])
+    mname = st.selectbox("Model", options=["homePricing","homePricing_votingmodel","homePricing_nn3layer"], index=2)
     with open(f"{mname}.pkl", "rb") as f:
         model = pickle.load(f)
     cols = st.columns(len(model.feature_names_in_))
