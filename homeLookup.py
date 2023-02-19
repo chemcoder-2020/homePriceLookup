@@ -3,8 +3,7 @@ import pandas as pd
 import pickle
 import numpy as np
 
-with open("homePricing.pkl", "rb") as f:
-    model = pickle.load(f)
+
 
 st.set_page_config(layout="wide")
 
@@ -35,6 +34,9 @@ with lookup:
         st.write(f"{col}: {query[col].values[0]}")
 
 with pretrained:
+    mname = st.selectbox("Model", options=["homePricing","homePricing_votingmodel"])
+    with open(f"{mname}.pkl", "rb") as f:
+        model = pickle.load(f)
     cols = st.columns(len(model.feature_names_in_))
     parameters = pd.DataFrame()
     for i, col in enumerate(cols):
