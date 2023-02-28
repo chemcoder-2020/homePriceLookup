@@ -56,7 +56,7 @@ with pretrained:
                 input_name = input_name.strip("# ")
             
             parameters[model.feature_names_in_[i]] = [
-                col.text_input()
+                col.text_input(input_name)
             ]
     parameters.replace("", np.nan, inplace=True)
     parameters.convert_dtypes()
