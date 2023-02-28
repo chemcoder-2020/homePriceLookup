@@ -51,8 +51,12 @@ with pretrained:
                 col.selectbox(model.feature_names_in_[i], options=np.unique(homes["PROPERTY TYPE"]))
             ]
         else:
+            input_name = model.feature_names_in_[i]
+            if "#" in input_name:
+                input_name = input_name.strip("# ")
+            
             parameters[model.feature_names_in_[i]] = [
-                col.text_input(model.feature_names_in_[i])
+                col.text_input()
             ]
     parameters.replace("", np.nan, inplace=True)
     parameters.convert_dtypes()
