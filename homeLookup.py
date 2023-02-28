@@ -9,34 +9,34 @@ st.set_page_config(layout="wide")
 
 lookup, pretrained = st.tabs(["Lookup", "Pretrained Model"])
 
-with lookup:
-    homes = pd.read_excel("EstimatedValue.xlsx")
-    print(homes.columns)
-    homes["URL"] = homes[
-        "URL (SEE https://www.redfin.com/buy-a-home/comparative-market-analysis FOR INFO ON PRICING)"
-    ]
+# with lookup:
+#     homes = pd.read_excel("EstimatedValue.xlsx")
+#     print(homes.columns)
+#     homes["URL"] = homes[
+#         "URL (SEE https://www.redfin.com/buy-a-home/comparative-market-analysis FOR INFO ON PRICING)"
+#     ]
 
-    homes.drop(
-        columns=[
-            "FAVORITE",
-            "INTERESTED",
-            "LATITUDE",
-            "LONGITUDE",
-            "URL (SEE https://www.redfin.com/buy-a-home/comparative-market-analysis FOR INFO ON PRICING)",
-        ],
-        inplace=True,
-    )
+#     homes.drop(
+#         columns=[
+#             "FAVORITE",
+#             "INTERESTED",
+#             "LATITUDE",
+#             "LONGITUDE",
+#             "URL (SEE https://www.redfin.com/buy-a-home/comparative-market-analysis FOR INFO ON PRICING)",
+#         ],
+#         inplace=True,
+#     )
     
-    address = st.selectbox(label="Home Address", options=homes["ADDRESS"])
-    query = homes[homes["ADDRESS"] == address]
-    query["PriceToValue"] = query["PriceToValue"].round(2)
-    query = pd.Series(query.T[query.T.columns[0]])
-    query.name = query.ADDRESS
-    st.write(query)
-    # for col in query.columns:
-    #     st.write(f"{col}: {query[col].values[0]}")
-    # st.write(homes)
-    AgGrid(homes)
+#     address = st.selectbox(label="Home Address", options=homes["ADDRESS"])
+#     query = homes[homes["ADDRESS"] == address]
+#     query["PriceToValue"] = query["PriceToValue"].round(2)
+#     query = pd.Series(query.T[query.T.columns[0]])
+#     query.name = query.ADDRESS
+#     st.write(query)
+#     # for col in query.columns:
+#     #     st.write(f"{col}: {query[col].values[0]}")
+#     # st.write(homes)
+#     AgGrid(homes)
     
 
 with pretrained:
@@ -55,7 +55,8 @@ with pretrained:
                 col.text_input(model.feature_names_in_[i])
             ]
     parameters.replace("", np.nan, inplace=True)
-    parameters.astype({"SQUARE FEET":float, "BEDS":float, "BATHS":float})
+    parameters.convert_dtypes()
+    # parameters.astype({"SQUARE FEET":float, "BEDS":float, "BATHS":float})
     
     st.write(parameters)
     if parameters.isna().sum().sum() == 0:
